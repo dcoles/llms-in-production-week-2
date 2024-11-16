@@ -4,7 +4,7 @@ ARG GUARDRAILS_TOKEN
 ARG OPENAI_API_KEY
 
 ENV APP_HOME /app
-ENV PYTHONPATH=$APP_HOME 
+ENV PYTHONPATH=$APP_HOME
 ENV GUARDRAILS_TOKEN=$GUARDRAILS_TOKEN
 ENV OPENAI_API_KEY=$OPENAI_API_KEY
 
@@ -16,7 +16,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       build-essential gcc git \
   && pip install --no-cache-dir --upgrade -r /app/requirements.txt \
   && guardrails configure --disable-metrics --disable-remote-inferencing --token $GUARDRAILS_TOKEN \
-  && guardrails hub install hub://guardrails/valid_sql \ 
+  && guardrails hub install hub://guardrails/valid_sql \
+  && guardrails hub install hub://guardrails/valid_json \
+  && guardrails hub install hub://guardrails/unusual_prompt \
   && rm -rf /var/lib/apt/lists/*
 # Add more guardrails to be installed in this chained RUN command!
 
